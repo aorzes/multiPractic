@@ -11,6 +11,7 @@
 @interface GameScene : SKScene
 {
     SKSpriteNode *sb1;
-
+    SKAction *motor;
+    SKSpriteNode *mlaz1;
 }
 @end
