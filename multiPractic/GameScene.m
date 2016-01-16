@@ -69,6 +69,46 @@
     }
 }
 
+
+- (void)showLeaderboardOnViewController:(UIViewController*)viewController
+{
+    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+    if (gameCenterController != nil) {
+        gameCenterController.gameCenterDelegate = self;
+        gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+        gameCenterController.leaderboardIdentifier = @"globalScore";
+        
+        [viewController presentViewController: gameCenterController animated: YES completion:nil];
+    }
+}
+
+
+
+
+- (void) presentLeaderboards {
+    GKGameCenterViewController* gameCenterController = [[GKGameCenterViewController alloc] init];
+    gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+    gameCenterController.gameCenterDelegate = self;
+    
+    UIViewController *vc=self.view.window.rootViewController;
+    [vc presentViewController:gameCenterController animated:YES completion:nil];
+    
+    
+}
+
+
+
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+
+
+
 -(void) touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
 
