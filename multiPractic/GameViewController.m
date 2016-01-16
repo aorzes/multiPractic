@@ -9,7 +9,41 @@
 #import "GameViewController.h"
 #import "GameScene.h"
 
+@interface GameViewController ()<gameCenterFilesDelegate>
+
+
+
+
+@end
+
 @implementation GameViewController
+
+-(void)viewDidAppear:(BOOL)animated{
+
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerAuthenticated) name:localPlayerIsAuthenticated object:nil];
+    
+
+}
+
+-(void)playerAuthenticated{
+
+    [[gameCenterFiles sharedGameKitHelper]findMatchWithMinPlayers:2 maxPlayers:2 viewControllelr:self delegate:self];
+
+}
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+
+}
+-(void)match:(GKMatch *)match didReceiveData:(NSData *)data fromRemotePlayer:(GKPlayer *)player{
+
+}
+-(void)matchStarted{
+
+}
+-(void)mathcEnded{
+
+}
 
 - (void)viewDidLoad
 {
