@@ -20,6 +20,7 @@
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerAuthenticated) name:localPlayerIsAuthenticated object:nil];
     
+    [[gameCenterFiles sharedInstance] authenticateLocalUser];
 
 }
 
