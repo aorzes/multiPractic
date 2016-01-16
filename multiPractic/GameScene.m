@@ -69,7 +69,7 @@
     }
 }
 
-
+/*
 - (void)showLeaderboardOnViewController:(UIViewController*)viewController
 {
     GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
@@ -105,9 +105,7 @@
         
     }];
 }
-
-
-
+*/
 
 -(void) touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {

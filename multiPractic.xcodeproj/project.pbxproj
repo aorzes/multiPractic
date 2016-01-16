@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EC2551651C495D760079E1AF /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC2551641C495D760079E1AF /* GameKit.framework */; };
 		EC25516B1C49644A0079E1AF /* gameCenterFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = EC2551691C49644A0079E1AF /* gameCenterFiles.m */; };
 		EC5A51C31C49496F00733A94 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5A51C21C49496F00733A94 /* main.m */; };
 		EC5A51C61C49496F00733A94 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EC5A51C51C49496F00733A94 /* AppDelegate.m */; };
@@ -22,7 +21,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EC2551641C495D760079E1AF /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		EC2551691C49644A0079E1AF /* gameCenterFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = gameCenterFiles.m; sourceTree = "<group>"; };
 		EC25516A1C49644A0079E1AF /* gameCenterFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gameCenterFiles.h; sourceTree = "<group>"; };
 		EC5A51BE1C49496F00733A94 /* multiPractic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = multiPractic.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,8 +73,8 @@
 		EC5A51C01C49496F00733A94 /* multiPractic */ = {
 			isa = PBXGroup;
 			children = (
-				EC2551691C49644A0079E1AF /* gameCenterFiles.m */,
 				EC25516A1C49644A0079E1AF /* gameCenterFiles.h */,
+				EC2551691C49644A0079E1AF /* gameCenterFiles.m */,
 				EC5A51C41C49496F00733A94 /* AppDelegate.h */,
 				EC5A51C51C49496F00733A94 /* AppDelegate.m */,
 				EC5A51C71C49496F00733A94 /* GameScene.h */,

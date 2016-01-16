@@ -10,19 +10,16 @@
 #import "GameViewController.h"
 #import "GameScene.h"
 
-
-@interface gameCenterFiles () <GKGameCenterControllerDelegate> {
-
+NSString *const localPlayerIsAuthenticated = @"local_player_authenticated";
 
 
-
-    BOOL _gameCenteFeaturesEnabled;
-
-
-
+@interface gameCenterFiles () {
+  BOOL _gameCenteFeaturesEnabled;
 }
 
+
 @end
+
 
 
 @implementation gameCenterFiles
@@ -42,6 +39,110 @@ static gameCenterFiles *sharedControl = nil;
 
 }
 
++(instancetype)sharedGameKitHelper{
+
+    static gameCenterFiles *sharedGameKitHelper;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedGameKitHelper = [[gameCenterFiles alloc]init];
+    });
+    return sharedGameKitHelper;
+    
+}
+
+-(void)matchmakerViewControllerWasCancelled:(GKMatchmakerViewController *)viewController{
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+
+}
+
+-(void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFailWithError:(NSError *)error{
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+
+}
+
+-(void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFindMatch:(GKMatch *)match{
+
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+    self.match = match;
+    match.delegate = self;
+    
+    if (!_matchStarted && match.expectedPlayerCount == 0) {
+        
+        NSLog(@"ready to start match");
+        
+        
+    }
+
+}
+
+-(void)match:(GKMatch *)match didReceiveData:(NSData *)data fromRemotePlayer:(GKPlayer *)player{
+    if (_match != match) {
+        
+        return;
+        
+    }
+    
+    [_delegate match:match didReceiveData:data fromRemotePlayer:player];
+    
+    
+    
+}
+
+-(void)match:(GKMatch *)match player:(GKPlayer *)player didChangeConnectionState:(GKPlayerConnectionState)state{
+    if (_match != match) {
+        return;
+    }
+    switch (state) {
+        case 0:
+        GKPlayerStateConnected:
+            NSLog(@"player connected");
+            
+            if (_matchStarted && match.expectedPlayerCount == 0) {
+                
+                NSLog(@"ready to start match");
+                
+            }
+            break;
+            case 2:
+        GKPlayerStateDisconnected:
+            NSLog(@"player disconected");
+            _matchStarted = NO;
+            [_delegate mathcEnded];
+            break;
+            
+        default:
+            break;
+    }
+    
+
+
+
+}
+
+- (void)match:(GKMatch *)match connectionWithPlayerFailed:(NSString *)playerID withError:(NSError *)error {
+    if (_match != match) return;
+    
+    NSLog(@"Failed to connect to player with error: %@", error.localizedDescription);
+    _matchStarted = NO;
+    [_delegate mathcEnded];
+}
+
+
+
+- (void)match:(GKMatch *)match didFailWithError:(NSError *)error {
+    if (_match != match) return;
+    
+    NSLog(@"Match failed with error: %@", error.localizedDescription);
+    _matchStarted = NO;
+    [_delegate mathcEnded];
+}
+
+
+-(void)findMatchWithMinPlayers:(int)minPlayers maxPlayers:(int)maxPlayers viewControllelr:(UIViewController *)viewController delegate:(id<gameCenterFilesDelegate>)delegate{
+
+    
+
+}
 
 
 
@@ -108,6 +209,12 @@ static gameCenterFiles *sharedControl = nil;
     if ([GKLocalPlayer localPlayer].authenticated == NO) {
         GKLocalPlayer* localPlayer = [GKLocalPlayer localPlayer];
         
+        if (localPlayer.isAuthenticated) {
+            [[NSNotificationCenter defaultCenter]postNotificationName:localPlayerIsAuthenticated object:nil];
+            return;
+            
+        }
+        
         localPlayer.authenticateHandler = ^(UIViewController *gcvc,NSError *error){
         
         
@@ -127,6 +234,7 @@ static gameCenterFiles *sharedControl = nil;
     
     
         _gameCenteFeaturesEnabled = YES;
+        [[NSNotificationCenter defaultCenter]postNotificationName:localPlayerIsAuthenticated object:nil];
     
     
     }
