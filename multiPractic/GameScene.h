@@ -7,8 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <GameKit/GameKit.h>
 
-@interface GameScene : SKScene
+@interface GameScene : SKScene <GKGameCenterControllerDelegate>
 {
     SKSpriteNode *sb1;
     SKAction *motor;
