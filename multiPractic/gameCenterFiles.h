@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
 
-BOOL _matchStarted;
+//BOOL _matchStarted;
 
-extern NSString *const localPlayerIsAuthenticated;
+@import GameKit;
 
 @protocol gameCenterFilesDelegate
 -(void)matchStarted;
@@ -21,15 +21,13 @@ extern NSString *const localPlayerIsAuthenticated;
 
 @end
 
-@interface gameCenterFiles : NSObject<GKGameCenterControllerDelegate, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate, GKMatchDelegate> {
+extern NSString *const localPlayerIsAuthenticated;
 
-    BOOL gameCenterAvailable;
-    BOOL userAuthenticated;
-    
+@interface gameCenterFiles : NSObject<GKGameCenterControllerDelegate, GKGameCenterControllerDelegate, GKMatchmakerViewControllerDelegate, GKMatchDelegate>
+//@interface gameCenterFiles : NSObject<GKMatchmakerViewControllerDelegate, GKMatchDelegate>
 
-}
 
-+(instancetype)sharedGameKitHelper;
+//+(instancetype)sharedGameKitHelper;
 @property (strong, nonatomic) GKMatch *match;
 @property (nonatomic, assign) id <gameCenterFilesDelegate> delegate;
 
@@ -37,6 +35,8 @@ extern NSString *const localPlayerIsAuthenticated;
 
 @property (assign, readonly) BOOL gameCenterAvailable;
 + (gameCenterFiles *)sharedInstance;
+
+//+ (instancetype *)sharedInstance;
 
 -(void)authenticateLocalUser;
 

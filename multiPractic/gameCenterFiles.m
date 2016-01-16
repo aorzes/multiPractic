@@ -23,11 +23,24 @@ NSString *const localPlayerIsAuthenticated = @"local_player_authenticated";
 
 
 @implementation gameCenterFiles
+{
+    
+    BOOL gameCenterAvailable;
+    BOOL userAuthenticated;
+    
+    BOOL _enableGameCenter;
+    BOOL _matchStarted;
+    
+    
+}
+
 
 
 @synthesize gameCenterAvailable;
 
 static gameCenterFiles *sharedControl = nil;
+
+
 +(gameCenterFiles *)sharedInstance {
 
     if (!sharedControl) {
@@ -39,6 +52,7 @@ static gameCenterFiles *sharedControl = nil;
 
 }
 
+/*
 +(instancetype)sharedGameKitHelper{
 
     static gameCenterFiles *sharedGameKitHelper;
@@ -49,6 +63,7 @@ static gameCenterFiles *sharedControl = nil;
     return sharedGameKitHelper;
     
 }
+ */
 
 -(void)matchmakerViewControllerWasCancelled:(GKMatchmakerViewController *)viewController{
     [viewController dismissViewControllerAnimated:YES completion:nil];
@@ -140,6 +155,22 @@ static gameCenterFiles *sharedControl = nil;
 
 -(void)findMatchWithMinPlayers:(int)minPlayers maxPlayers:(int)maxPlayers viewControllelr:(UIViewController *)viewController delegate:(id<gameCenterFilesDelegate>)delegate{
 
+    if (!_enableGameCenter) return;
+    
+    _matchStarted = NO;
+    self.match = nil;
+    _delegate = delegate;
+    [viewController dismissViewControllerAnimated:NO completion:nil];
+    
+    GKMatchRequest *request = [[GKMatchRequest alloc] init];
+    request.minPlayers = minPlayers;
+    request.maxPlayers = maxPlayers;
+    
+    GKMatchmakerViewController *mmvc =
+    [[GKMatchmakerViewController alloc] initWithMatchRequest:request];
+    mmvc.matchmakerDelegate = self;
+    
+    [viewController presentViewController:mmvc animated:YES completion:nil];
     
 
 }

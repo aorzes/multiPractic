@@ -11,9 +11,6 @@
 
 @interface GameViewController ()<gameCenterFilesDelegate>
 
-
-
-
 @end
 
 @implementation GameViewController
@@ -28,8 +25,8 @@
 
 -(void)playerAuthenticated{
 
-    [[gameCenterFiles sharedGameKitHelper]findMatchWithMinPlayers:2 maxPlayers:2 viewControllelr:self delegate:self];
-
+   // [[gameCenterFiles sharedGameKitHelper]findMatchWithMinPlayers:2 maxPlayers:2 viewControllelr:self delegate:self];
+    [[gameCenterFiles sharedInstance]findMatchWithMinPlayers:2 maxPlayers:2 viewControllelr:self delegate:self];
 }
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
