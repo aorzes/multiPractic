@@ -66,6 +66,11 @@
     }
 }
 
+-(void) touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+
+}
+
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
 }
