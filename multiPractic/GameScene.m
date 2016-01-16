@@ -7,12 +7,15 @@
 //
 
 #import "GameScene.h"
+#import "gameCenterFiles.h"
 
 @implementation GameScene
 
 -(void)didMoveToView:(SKView *)view {
     /* Setup your scene here */
     self.physicsWorld.gravity = CGVectorMake(0, -0.5);
+    
+    [[gameCenterFiles sharedInstance]authenticateLocalUser];
     
     SKShapeNode *gore = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(self.size.width, 10)];
     gore.position = CGPointMake(self.size.width/2, self.size.height-5);
@@ -65,6 +68,45 @@
         
     }
 }
+
+- (void)showLeaderboardOnViewController:(UIViewController*)viewController
+{
+    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+    if (gameCenterController != nil) {
+        gameCenterController.gameCenterDelegate = self;
+        gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+        gameCenterController.leaderboardIdentifier = @"globalScore";
+        
+        [viewController presentViewController: gameCenterController animated: YES completion:nil];
+    }
+}
+
+
+
+
+- (void) presentLeaderboards {
+    GKGameCenterViewController* gameCenterController = [[GKGameCenterViewController alloc] init];
+    gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+    gameCenterController.gameCenterDelegate = self;
+    
+    UIViewController *vc=self.view.window.rootViewController;
+    [vc presentViewController:gameCenterController animated:YES completion:nil];
+    
+    
+}
+
+
+
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+
+
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
