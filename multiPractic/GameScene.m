@@ -7,7 +7,7 @@
 //
 
 #import "GameScene.h"
-#import "gameCenterFiles.h"
+
 
 @implementation GameScene
 
@@ -15,7 +15,7 @@
     /* Setup your scene here */
     self.physicsWorld.gravity = CGVectorMake(0, -0.5);
     
-    [[gameCenterFiles sharedInstance]authenticateLocalUser];
+    
     
     SKShapeNode *gore = [SKShapeNode shapeNodeWithRectOfSize:CGSizeMake(self.size.width, 10)];
     gore.position = CGPointMake(self.size.width/2, self.size.height-5);

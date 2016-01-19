@@ -9,40 +9,22 @@
 #import "GameViewController.h"
 #import "GameScene.h"
 
-@interface GameViewController ()<gameCenterFilesDelegate>
+
+
+@interface GameViewController ()
+
+
 
 @end
 
 @implementation GameViewController
 
--(void)viewDidAppear:(BOOL)animated{
 
-    [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playerAuthenticated) name:localPlayerIsAuthenticated object:nil];
+- (IBAction)probajSpoj:(id)sender {
     
-    [[gameCenterFiles sharedInstance] authenticateLocalUser];
-
+    
 }
 
--(void)playerAuthenticated{
-
-    [[gameCenterFiles sharedInstance]findMatchWithMinPlayers:2 maxPlayers:2 viewControllelr:self delegate:self];
-    NSLog(@"findMatchWithMinPlayers");
-}
--(void)dealloc{
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-
-}
--(void)match:(GKMatch *)match didReceiveData:(NSData *)data fromRemotePlayer:(GKPlayer *)player{
-    NSLog(@"Received data");
-}
--(void)matchStarted{
-    NSLog(@"Match started");
-
-}
--(void)mathcEnded{
-    NSLog(@"Match ended");
-}
 
 - (void)viewDidLoad
 {
@@ -63,6 +45,7 @@
     // Present the scene.
     [skView presentScene:scene];
 }
+
 
 - (BOOL)shouldAutorotate
 {
